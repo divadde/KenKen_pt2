@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public interface CellIF extends Serializable {
 
@@ -21,6 +22,10 @@ public interface CellIF extends Serializable {
 
     //controlli
     boolean hasConstraint();
+    void removeInContrast(CellIF c);
+    void addInContrast(CellIF c);
+    List<CellIF> getInContrast();
+    void setRulesState(boolean state);
 
     //util
 }

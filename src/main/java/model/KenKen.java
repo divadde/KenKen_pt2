@@ -11,10 +11,13 @@ public final class KenKen implements GridGame, Serializable {
     private static KenKen INSTANCE = null;
     private static int dimension;
     private static Cell[][] table;
+    private static KenKenRules rules;
 
     private static final long serialVersionUID = 9177631848186263965L;
 
-    private KenKen() {}
+    private KenKen() {
+        rules=KenKenRules.getInstance(this);
+    }
 
     public static synchronized KenKen getInstance(){
         if(INSTANCE==null)
@@ -151,25 +154,6 @@ public final class KenKen implements GridGame, Serializable {
         return dimension;
     }
 
-    //todo forse sarà utile se vogliamo introdurre un oggetto Constraint (per esempio un oggetto che regola la presenza di ripetizioni all'interno di una riga)
-    private List<Cell> verify(int val, int x, int y) {
-        List<Cell> ret = new LinkedList<>();
-        for (int i = 0; i < dimension; i++) {
-            if (i != y && val == table[x][i].getValue()) {
-                ret.add(table[x][i]);
-            }
-            if (i != x && val == table[i][y].getValue()) {
-                ret.add(table[i][y]);
-            }
-        }
-        return ret;
-    }
-
-    //usato dalla cella per verificare correttezza inserimento
-    private boolean verifyNumber(int val){
-        return val>=1 && val<=dimension;
-    }
-
     //scambio solo i valori!
     @Override
     public void switchRow(int i, int j) {
@@ -234,9 +218,9 @@ public final class KenKen implements GridGame, Serializable {
         private int x;
         private int y;
         private Constraint cage;
-        private boolean stateKenKen; //state rules
+        private boolean stateRules;
         private boolean stateCage;
-        private List<Cell> inContrast;
+        private List<CellIF> inContrast;
 
         private static final long serialVersionUID = 4177631348182261145L;
 
@@ -245,7 +229,7 @@ public final class KenKen implements GridGame, Serializable {
             this.x = x;
             this.y = y;
             value = 0;
-            stateKenKen=false;
+            stateRules=false;
             stateCage=false;
         }
 
@@ -265,18 +249,21 @@ public final class KenKen implements GridGame, Serializable {
             value=x;
         }
 
-        private void addInContrast(Cell c){
+        @Override
+        public void addInContrast(CellIF c){
             inContrast.add(c);
         }
-        private void removeInContrast(Cell c){inContrast.remove(c); }
+        @Override
+        public void removeInContrast(CellIF c){inContrast.remove(c); }
 
         @Override
         public boolean getState(){
-            return stateKenKen && stateCage;
+            return stateRules && stateCage;
         }
 
-        public void setKenKenState(boolean state){
-            stateKenKen=state;
+        @Override
+        public void setRulesState(boolean state){
+            stateRules=state;
         }
         public void setCageState(boolean state){
             stateCage=state;
@@ -304,47 +291,52 @@ public final class KenKen implements GridGame, Serializable {
 
         @Override
         public void clean() {
-            List<Cell> daEliminare = new LinkedList<Cell>();
-            for(Cell c: inContrast){
+            List<CellIF> daEliminare = new LinkedList<CellIF>();
+            for(CellIF c: inContrast){
                 c.removeInContrast(this);
                 daEliminare.add(c);
             }
-            for(Cell c: daEliminare) {
-                c.setKenKenState(c.inContrast.isEmpty());
+            for(CellIF c: daEliminare) {
+                c.setRulesState(c.getInContrast().isEmpty());
             }
             inContrast.removeAll(daEliminare);
             value = 0;
-            stateKenKen=false;
+            stateRules=false;
             stateCage=false;
+        }
+
+        @Override
+        public List<CellIF> getInContrast(){
+            return inContrast;
         }
 
         @Override
         public boolean setValue(int value) {
             this.value = value;
-            List<Cell> ver = verify(value,x,y);
-            for(Cell c : ver){
+            List<CellIF> ver = rules.verifyOnGrid(value,x,y);
+            for(CellIF c : ver){
                 if(!(inContrast.contains(c))){
-                    c.setKenKenState(false);
+                    c.setRulesState(false);
                     c.addInContrast(this);
                     addInContrast(c);
                 }
             }
-            List<Cell> daEliminare = new LinkedList<Cell>();
-            for(Cell c: inContrast){
+            List<CellIF> daEliminare = new LinkedList<CellIF>();
+            for(CellIF c: inContrast){
                 if(!(ver.contains(c))){
                     c.removeInContrast(this);
-                    c.setKenKenState(c.inContrast.isEmpty());
+                    c.setRulesState(c.getInContrast().isEmpty());
                     daEliminare.add(c);
                 }
             }
             inContrast.removeAll(daEliminare);
-            if(!verifyNumber(value))
+            if(!rules.verifyOnNumber(value))
                 this.value=0;
-            stateKenKen=verifyNumber(value) && inContrast.isEmpty();
+            stateRules=rules.verifyOnNumber(value) && inContrast.isEmpty();
             stateCage=true;
             if (cage != null)
                 stateCage=cage.verify();
-            return stateKenKen && stateCage;
+            return stateRules && stateCage;
         }
 
         @Override

@@ -106,14 +106,18 @@ public class GridPanel extends JPanel implements Subject {
             revalidate();
         }
         else if(request.getTipo()==Request.Tipo.SAVEGAME){
-            request.getCommand().execute(gridGame);
+            try{
+                request.getCommand().execute(gridGame);
+            }catch(NullPointerException exc) {
+                System.out.println("Operazione di salvataggio annullata");
+            }
         }
         else if(request.getTipo()==Request.Tipo.LOADGAME){
             try {
                 request.getCommand().execute(gridGame);
                 mediator.notify(new Request(Request.Tipo.READY,new NullCommand()));
             }catch(NullPointerException exc) {
-                System.out.println("Operazione di inserimento annullata");
+                System.out.println("Operazione di caricamento annullata");
             }
         }
         else if(request.getTipo()==Request.Tipo.SHOWSOLUTION){
