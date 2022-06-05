@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="proviamo" />
-        <module name="KenKen" />
+        <module name="isproj" />
       </profile>
     </annotationProcessing>
   </component>

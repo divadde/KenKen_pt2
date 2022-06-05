@@ -52,7 +52,7 @@ public class GridPanel extends JPanel implements Subject {
     public void aggiornaValori(){
         for(int i=0; i<gridGame.getDimension(); i++){
             for(int j=0; j<gridGame.getDimension(); j++){
-                int value = gridGame.getCell(i,j).getValue();
+                int value = gridGame.getValue(i,j);
                 if(value!=0)
                     grigliaGrafica[i][j].setText(Integer.toString(value));
             }
@@ -75,10 +75,10 @@ public class GridPanel extends JPanel implements Subject {
     private void coloraCelle(){
         for(int i=0; i<gridGame.getDimension(); i++){
             for(int j=0; j<gridGame.getDimension(); j++) {
-                if(gridGame.getCell(i,j).getValue()==0)
+                if(gridGame.getValue(i,j)==0)
                     grigliaGrafica[i][j].setBackground(new Color(255,255,255));
                 else {
-                    if (gridGame.getCell(i,j).getState())
+                    if (gridGame.getState(i,j))
                         grigliaGrafica[i][j].setBackground(new Color(80, 220, 80));
                     else
                         grigliaGrafica[i][j].setBackground(new Color(220, 80, 80));
@@ -147,11 +147,9 @@ public class GridPanel extends JPanel implements Subject {
     //todo non va bene questa struttura di cella e tabella. Devo avere la possibilità di riferirmi solo alla tabella!
     private class GameCell extends JTextField implements KeyListener {
         private int x, y;
-        private Constraint c;
         private boolean drawCell=false;
 
         public GameCell(int x, int y){
-            this.c=gridGame.getConstraint(x,y);
             this.x=x;
             this.y=y;
             addKeyListener(this);
@@ -171,7 +169,7 @@ public class GridPanel extends JPanel implements Subject {
                 Font font = new Font("Arial", Font.PLAIN, 16);
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setFont(font);
-                g2d.drawString(c.toString(), 7, 20);
+                g2d.drawString(gridGame.getConstraint(x,y).toString(), 7, 20);
             }
         }
 
@@ -212,12 +210,12 @@ public class GridPanel extends JPanel implements Subject {
                 if(suggerimentiEnabled)
                     coloraCelle();
                 System.out.println("modificata la cella " + x + "," + y);
-                System.out.println(gridGame.getCell(x, y).getState());
+                System.out.println(gridGame.getState(x,y));
             } catch (NumberFormatException ex) {
                 gridGame.removeValue(x,y);
                 setText(null);
                 System.out.println("modificata la cella " + x + "," + y);
-                System.out.println(gridGame.getCell(x, y).getState());
+                System.out.println(gridGame.getState(x,y));
                 this.setBackground(Color.WHITE);
             }
         }

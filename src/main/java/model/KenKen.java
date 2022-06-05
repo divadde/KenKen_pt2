@@ -69,6 +69,13 @@ public final class KenKen implements GridGame, Serializable {
         //System.out.println(this);
     }
     @Override
+    public int getValue(int x, int y){
+        if(x>=0 && x<dimension && y>=0 && y<dimension)
+            return table[x][y].getValue();
+        return -1;
+    }
+
+    @Override
     public void removeValue(int x, int y) {
         if(x>=0 && x<dimension && y>=0 && y<dimension)
             table[x][y].clean();
@@ -120,6 +127,13 @@ public final class KenKen implements GridGame, Serializable {
         if(x>=0 && x<dimension && y>=0 && y<dimension)
             return table[x][y];
         return null;
+    }
+
+    @Override
+    public boolean getState(int x, int y) {
+        if(x>=0 && x<dimension && y>=0 && y<dimension)
+            return table[x][y].getState();
+        return false;
     }
 
     @Override

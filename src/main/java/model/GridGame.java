@@ -10,6 +10,8 @@ public interface GridGame extends Serializable {
 
     //interazione col gioco
     void addValue(int val, int x, int y);
+    int getValue(int x, int y);
+    boolean getState(int x, int y);
     void removeValue(int x, int y);
     void clean();
 
