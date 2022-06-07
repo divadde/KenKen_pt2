@@ -7,6 +7,7 @@ import graphic.mediator.Subject;
 import model.Constraint;
 import model.GridGame;
 import model.KenKen;
+import model.MementoTable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,9 @@ public class GridPanel extends JPanel implements Subject {
     private List<Constraint> constr;
     private GameCell[][] grigliaGrafica;
     private boolean suggerimentiEnabled;
+
+    private MementoTable session;
+
 
     public GridPanel(Mediator mediator) {
         setMediator(mediator);
@@ -53,7 +57,10 @@ public class GridPanel extends JPanel implements Subject {
         for(int i=0; i<gridGame.getDimension(); i++){
             for(int j=0; j<gridGame.getDimension(); j++){
                 int value = gridGame.getValue(i,j);
-                if(value!=0)
+                if(value==0){
+                    grigliaGrafica[i][j].setText("");
+                }
+                else
                     grigliaGrafica[i][j].setText(Integer.toString(value));
             }
         }
@@ -121,6 +128,7 @@ public class GridPanel extends JPanel implements Subject {
             }
         }
         else if(request.getTipo()==Request.Tipo.SHOWSOLUTION){
+            session = gridGame.createMemento(); //salvo sessione di gioco
             request.getCommand().execute(gridGame);
             aggiornaValori();
         }
@@ -138,6 +146,12 @@ public class GridPanel extends JPanel implements Subject {
                 coloraCelle();
             else
                 eliminaColori();
+        }
+        else if(request.getTipo()==Request.Tipo.PREVGAME){
+            gridGame.setMemento(session);
+            aggiornaValori();
+            repaint();
+            revalidate();
         }
     }
 

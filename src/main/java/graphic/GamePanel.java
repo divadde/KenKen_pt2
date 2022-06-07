@@ -65,12 +65,6 @@ public class GamePanel extends JPanel implements ActionListener, Subject {
             nuovaPartita.setVisible(false);
             caricaPartita.setVisible(false);
         }
-        else if(request.getTipo()==Request.Tipo.SAVEGAME){
-            //todo
-        }
-        else if(request.getTipo()==Request.Tipo.SHOWSUGGESTINGS){
-            //todo
-        }
     }
 
     @Override
