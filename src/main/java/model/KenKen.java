@@ -4,6 +4,7 @@ import backtracking.*;
 import generating.*;
 import model.constraints.Constraint;
 import model.rule.KenKenRules;
+import model.rule.Rules;
 import model.util.MementoTable;
 
 import java.io.Serializable;
@@ -14,12 +15,11 @@ public final class KenKen implements GridGame, Serializable {
     private static KenKen INSTANCE = null;
     private static int dimension;
     private static Cell[][] table;
-    private static KenKenRules rules;
+    private static Rules rules;
 
     private static final long serialVersionUID = 9177631848186263965L;
 
     private KenKen() {
-        rules=KenKenRules.getInstance(this);
     }
 
     public static synchronized KenKen getInstance(){
@@ -29,9 +29,11 @@ public final class KenKen implements GridGame, Serializable {
     }
 
     //OK
+    @Override
     public MementoTable createMemento(){
         return new MementoTable(getTable());
     }
+    @Override
     public void setMemento(MementoTable memento) {
         setTable(memento.getTable());
     }
@@ -143,6 +145,11 @@ public final class KenKen implements GridGame, Serializable {
     }
 
     @Override
+    public void setRules(Rules rules){
+        this.rules=rules;
+    }
+
+    @Override
     public void setDimension(int n) {
         this.dimension = n;
         table = new Cell[dimension][dimension];
@@ -183,6 +190,7 @@ public final class KenKen implements GridGame, Serializable {
         return sb.toString();
     }
 
+    @Override
     public String constrString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < dimension; i++) {
@@ -194,6 +202,7 @@ public final class KenKen implements GridGame, Serializable {
         return sb.toString();
     }
 
+    @Override
     public List<Constraint> listOfConstraint(){
         List<Constraint> list = new LinkedList<>();
         for(int i=0; i<dimension; i++){
@@ -206,12 +215,12 @@ public final class KenKen implements GridGame, Serializable {
     }
 
     @Override
-    public Generator getGenerator() {
+    public KenKenGenerator getGenerator() {
         return KenKenGenerator.getInstance(this);
     }
 
     @Override
-    public Backtracking getBacktracking() {
+    public KenKenSolver getBacktracking() {
         return KenKenSolver.getInstance(this);
     }
 
@@ -268,6 +277,7 @@ public final class KenKen implements GridGame, Serializable {
         public void setRulesState(boolean state){
             stateRules=state;
         }
+        @Override
         public void setCageState(boolean state){
             stateCage=state;
         }
@@ -280,16 +290,6 @@ public final class KenKen implements GridGame, Serializable {
         @Override
         public int getY() {
             return y;
-        }
-
-        @Override
-        public void setX(int x) {
-            this.x = x;
-        }
-
-        @Override
-        public void setY(int y) {
-            this.y = y;
         }
 
         @Override
@@ -314,7 +314,7 @@ public final class KenKen implements GridGame, Serializable {
         }
 
         @Override
-        public boolean setValue(int value) {
+        public void setValue(int value) {
             this.value = value;
             List<CellIF> ver = rules.verifyOnGrid(value,x,y);
             for(CellIF c : ver){
@@ -339,7 +339,6 @@ public final class KenKen implements GridGame, Serializable {
             stateCage=true;
             if (cage != null)
                 stateCage=cage.verify();
-            return stateRules && stateCage;
         }
 
         @Override
@@ -363,6 +362,7 @@ public final class KenKen implements GridGame, Serializable {
             return cage;
         }
 
+        @Override
         public String toString() {
             return "[" + value + "]";
         }

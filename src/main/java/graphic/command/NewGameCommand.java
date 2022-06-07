@@ -4,6 +4,8 @@ import backtracking.Backtracking;
 import generating.Generator;
 import model.constraints.Cage;
 import model.GridGame;
+import model.rule.KenKenRules;
+import model.rule.Rules;
 import model.util.Settings;
 
 public class NewGameCommand implements Command {
@@ -20,6 +22,8 @@ public class NewGameCommand implements Command {
         b.setMaxSol(s.getMaxSol());
         System.out.println("Impostate "+s.getMaxSol()+"soluzioni");
         Generator g = gg.getGenerator();
+        Rules rules = KenKenRules.getInstance(gg);
+        gg.setRules(rules);
         Cage cage = new Cage();
         cage.setRelazPrecedenza(s.isPrecedenza());
         g.setPrototypeConstraint(cage);

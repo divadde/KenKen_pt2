@@ -7,4 +7,6 @@ public interface Subject {
     //metodo per forzare i subject ad avere il proprio mediator
     void setMediator(Mediator mediator);
 
+
+
 }

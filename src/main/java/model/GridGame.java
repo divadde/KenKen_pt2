@@ -3,12 +3,13 @@ package model;
 import backtracking.*;
 import generating.*;
 import model.constraints.Constraint;
+import model.rule.Rules;
 import model.util.MementoTable;
 
 import java.io.Serializable;
 import java.util.List;
 
-public interface GridGame extends Serializable {
+public interface GridGame {
 
     //interazione col gioco
     void addValue(int val, int x, int y);
@@ -25,6 +26,7 @@ public interface GridGame extends Serializable {
     CellIF getCell(int x, int y);
     void changeReferenceTable(CellIF[][] table);
     CellIF[][] getReferenceTable();
+    void setRules(Rules rules);
 
     //controlli
     boolean isLegal(int val, int x, int y);

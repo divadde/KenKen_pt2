@@ -5,21 +5,20 @@ import model.constraints.Constraint;
 import java.io.Serializable;
 import java.util.List;
 
-public interface CellIF extends Serializable {
+public interface CellIF {
 
     //interazione col gioco
-    boolean setValue(int value);
+    void setValue(int value);
     int getValue();
     void clean();
 
     //modifica cella
-    void setX(int x);
     int getX();
-    void setY(int y);
     int getY();
     void setConstraint(Constraint c);
     Constraint getConstraint();
     void setCageState(boolean state);
+    void setRulesState(boolean state);
     boolean getState();
 
     //controlli
@@ -27,7 +26,6 @@ public interface CellIF extends Serializable {
     void removeInContrast(CellIF c);
     void addInContrast(CellIF c);
     List<CellIF> getInContrast();
-    void setRulesState(boolean state);
 
     //util
 }
