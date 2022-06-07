@@ -25,14 +25,14 @@ public class GameSettings extends JFrame implements ActionListener, Subject {
 
         setTitle("Impostazioni di gioco");
         setResizable(false);
-        setSize(300, 350);
+        setSize(460, 350);
         setLocation(500, 300);
 
         Container c = getContentPane();
         c.setLayout(null);
 
-        JLabel l1 = new JLabel("Inserisci dimensione del KenKen: ");
-        l1.setSize(300, 30);
+        JLabel l1 = new JLabel("Inserisci dimensione del KenKen (minimo 3, massimo 7): ");
+        l1.setSize(400, 30);
         l1.setLocation(30, 30);
         JLabel l2 = new JLabel("Numero massimo di soluzioni: ");
         l2.setSize(300, 30);
@@ -94,16 +94,10 @@ public class GameSettings extends JFrame implements ActionListener, Subject {
 
         ok = new JButton("Ok");
         ok.setSize(50, 30);
-        ok.setLocation(120, 270);
+        ok.setLocation(200, 270);
         ok.addActionListener(this);
 
         c.add(ok);
-
-
-        addWindowListener( new WindowAdapter() {
-                            public void windowClosing(WindowEvent e){
-                                mediator.notify(new Request(Request.Tipo.READY,new NewGameCommand(settings)));
-                                } } );
 
     }
 
@@ -113,11 +107,14 @@ public class GameSettings extends JFrame implements ActionListener, Subject {
         mediator.addSubject(this);
     }
 
-    //todo aggiungi controlli
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==ok) {
-            mediator.notify(new Request(Request.Tipo.READY,new NewGameCommand(settings)));
+            if(settings.getDimension()<3 || settings.getDimension()>7 || settings.getMaxSol()<1) {
+                JOptionPane.showMessageDialog(null,"Parametri non validi!");
+            }
+            else
+                mediator.notify(new Request(Request.Tipo.READY,new NewGameCommand(settings)));
         }
         else if(e.getSource()==b1){
             settings.setPrecedenza(true);
