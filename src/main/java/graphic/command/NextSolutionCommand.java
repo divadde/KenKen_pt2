@@ -41,8 +41,6 @@ public class NextSolutionCommand implements Command {
         nextDir=dir;
     }
 
-
-
     @Override
     public void execute(GridGame gg) {
         if(previousDir!=nextDir)

@@ -12,7 +12,6 @@ public abstract class Backtracking<P,C,S> {
     public abstract void solve();
 
     protected void execute(P point) {
-        System.out.println("Provo");
         Collection<C> choices=admissibleChoices(point);
         for(C choice: choices) {
             if(stop(point))

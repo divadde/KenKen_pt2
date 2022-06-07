@@ -8,5 +8,4 @@ public interface Subject {
     void setMediator(Mediator mediator);
 
 
-
 }

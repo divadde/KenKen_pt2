@@ -12,11 +12,11 @@ import java.util.ListIterator;
 //SINGLETON
 public final class KenKenSolver extends Backtracking<CellIF,Integer,MementoTable>{
     private static KenKenSolver INSTANCE=null;
-    private int sol;
-    private GridGame gg;
-    private List<MementoTable> completeTables;
-    private ListIterator<MementoTable> lit;
-    private int maxSol;
+    private static int sol;
+    private static GridGame gg;
+    private static List<MementoTable> completeTables;
+    private static ListIterator<MementoTable> lit;
+    private static int maxSol;
 
     private KenKenSolver(GridGame gg){
         maxSol=10; //assegnate di default

@@ -6,7 +6,7 @@ import java.util.List;
 
 //MEDIATOR
 public class Mediator {
-    List<Subject> subjects = new LinkedList<>();
+    private List<Subject> subjects = new LinkedList<>();
 
     public void addSubject(Subject s){
         subjects.add(s);

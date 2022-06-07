@@ -9,7 +9,7 @@ import model.rule.Rules;
 import model.util.Settings;
 
 public class NewGameCommand implements Command {
-    Settings s;
+    private Settings s;
 
     public NewGameCommand(Settings s){
         this.s=s;
