@@ -1,9 +1,12 @@
-package model;
+package model.rule;
+
+import model.CellIF;
+import model.GridGame;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class KenKenRules implements Rules{
+public class KenKenRules implements Rules {
     private static KenKenRules INSTANCE = null;
     private static GridGame gridGame;
 

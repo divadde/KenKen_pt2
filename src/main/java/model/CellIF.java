@@ -1,5 +1,7 @@
 package model;
 
+import model.constraints.Constraint;
+
 import java.io.Serializable;
 import java.util.List;
 

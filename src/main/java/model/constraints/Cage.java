@@ -1,4 +1,6 @@
-package model;
+package model.constraints;
+
+import model.CellIF;
 
 import java.io.Serializable;
 import java.util.LinkedList;

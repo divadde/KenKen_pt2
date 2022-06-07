@@ -4,10 +4,10 @@ import graphic.command.NullCommand;
 import graphic.mediator.Mediator;
 import graphic.mediator.Request;
 import graphic.mediator.Subject;
-import model.Constraint;
+import model.constraints.Constraint;
 import model.GridGame;
 import model.KenKen;
-import model.MementoTable;
+import model.util.MementoTable;
 
 import javax.swing.*;
 import java.awt.*;

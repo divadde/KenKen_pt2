@@ -2,7 +2,7 @@ package graphic.command;
 
 import backtracking.Backtracking;
 import model.GridGame;
-import model.MementoTable;
+import model.util.MementoTable;
 
 public class PreviousSolutionCommand implements Command {
 

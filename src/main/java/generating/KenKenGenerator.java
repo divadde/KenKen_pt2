@@ -1,6 +1,7 @@
 package generating;
 
 import model.*;
+import model.constraints.Constraint;
 
 import java.util.LinkedList;
 import java.util.List;

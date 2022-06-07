@@ -1,4 +1,4 @@
-package model;
+package model.util;
 
 //possibilità di aggiunta di un Builder?
 public class Settings {

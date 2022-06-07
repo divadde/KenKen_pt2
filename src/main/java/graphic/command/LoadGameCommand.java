@@ -1,7 +1,7 @@
 package graphic.command;
 
 import model.GridGame;
-import model.Informations;
+import model.util.Informations;
 
 import javax.swing.*;
 import java.io.EOFException;

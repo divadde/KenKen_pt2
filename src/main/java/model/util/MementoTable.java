@@ -1,5 +1,7 @@
-package model;
+package model.util;
 
+
+import model.CellIF;
 
 //MEMENTO
 public class MementoTable {

@@ -2,7 +2,7 @@ package backtracking;
 
 import model.CellIF;
 import model.GridGame;
-import model.MementoTable;
+import model.util.MementoTable;
 
 import java.util.Collection;
 import java.util.LinkedList;

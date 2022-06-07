@@ -1,6 +1,6 @@
 package generating;
 
-import model.Constraint;
+import model.constraints.Constraint;
 import model.GridGame;
 
 //TEMPLATE METHOD

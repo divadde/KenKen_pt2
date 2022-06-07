@@ -4,7 +4,7 @@ import graphic.command.NewGameCommand;
 import graphic.mediator.Mediator;
 import graphic.mediator.Request;
 import graphic.mediator.Subject;
-import model.Settings;
+import model.util.Settings;
 
 import javax.swing.*;
 import java.awt.*;

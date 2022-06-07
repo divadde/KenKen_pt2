@@ -1,4 +1,6 @@
-package model;
+package model.util;
+
+import model.CellIF;
 
 import java.io.Serializable;
 

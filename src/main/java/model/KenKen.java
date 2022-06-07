@@ -2,6 +2,9 @@ package model;
 
 import backtracking.*;
 import generating.*;
+import model.constraints.Constraint;
+import model.rule.KenKenRules;
+import model.util.MementoTable;
 
 import java.io.Serializable;
 import java.util.LinkedList;

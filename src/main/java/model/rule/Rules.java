@@ -1,4 +1,6 @@
-package model;
+package model.rule;
+
+import model.CellIF;
 
 import java.util.List;
 

@@ -2,9 +2,9 @@ package graphic.command;
 
 import backtracking.Backtracking;
 import generating.Generator;
-import model.Cage;
+import model.constraints.Cage;
 import model.GridGame;
-import model.Settings;
+import model.util.Settings;
 
 public class NewGameCommand implements Command {
     Settings s;
