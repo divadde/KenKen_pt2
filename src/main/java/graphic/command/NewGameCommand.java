@@ -22,7 +22,7 @@ public class NewGameCommand implements Command {
         b.setMaxSol(s.getMaxSol());
         System.out.println("Impostate "+s.getMaxSol()+"soluzioni");
         Generator g = gg.getGenerator();
-        Rules rules = KenKenRules.getInstance(gg);
+        Rules rules = new KenKenRules(gg);
         gg.setRules(rules);
         Cage cage = new Cage();
         cage.setRelazPrecedenza(s.isPrecedenza());

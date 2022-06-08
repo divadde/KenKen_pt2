@@ -7,18 +7,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class KenKenRules implements Rules {
-    private static KenKenRules INSTANCE = null;
-    private static GridGame gridGame;
+    private GridGame gridGame;
 
-    private KenKenRules(GridGame gridGame){
+    public KenKenRules(GridGame gridGame){
         this.gridGame=gridGame;
     }
 
-    public static synchronized KenKenRules getInstance(GridGame gridGame){
-        if(INSTANCE==null)
-            return new KenKenRules(gridGame);
-        return INSTANCE;
-    }
 
     @Override
     public List<CellIF> verifyOnGrid(int val, int x, int y) {
