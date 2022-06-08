@@ -119,7 +119,7 @@ public class Cage extends Constraint implements Serializable {
     }
 
     @Override
-    public Constraint clone() {
+    public Cage clone() {
         Cage c = (Cage) super.clone();
         c.cells = new LinkedList<>(); //assegno una nuova lista vuota per evitare aliasing con le altre gabbie
         return c;

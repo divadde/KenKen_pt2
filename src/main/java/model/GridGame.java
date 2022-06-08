@@ -6,7 +6,6 @@ import model.constraints.Constraint;
 import model.rule.Rules;
 import model.util.MementoTable;
 
-import java.io.Serializable;
 import java.util.List;
 
 public interface GridGame {
@@ -31,8 +30,6 @@ public interface GridGame {
     //controlli
     boolean isLegal(int val, int x, int y);
     boolean isCompleted();
-    MementoTable createMemento();
-    void setMemento(MementoTable memento);
 
     //util
     void switchRow(int i, int j);
@@ -41,5 +38,7 @@ public interface GridGame {
     List<Constraint> listOfConstraint();
     Generator getGenerator();
     Backtracking getBacktracking();
+    MementoTable createMemento();
+    void setMemento(MementoTable memento);
     
 }

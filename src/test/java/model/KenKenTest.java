@@ -2,21 +2,22 @@ package model;
 
 import generating.Generator;
 import model.constraints.Cage;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import model.rule.KenKenRules;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class KenKenTest {
     private static KenKen kenKen;
 
-    @BeforeAll
-    public static void runOnceBeforeAllTests() {
-        System.out.println("Inizio fase di testing");
+    @BeforeEach
+    public void runOnceBeforeEachTests() {
+        System.out.println("Inizio test");
         kenKen=KenKen.getInstance();
         kenKen.setDimension(6);
         Generator g = kenKen.getGenerator();
+        KenKenRules rules = new KenKenRules(kenKen);
+        kenKen.setRules(rules);
         Cage c = new Cage();
         c.setRelazPrecedenza(false);
         g.setPrototypeConstraint(c);
@@ -24,9 +25,9 @@ class KenKenTest {
         System.out.println("Generato il kenken da testare");
     }
 
-    @AfterAll
-    public static void runOnceAfterAllTests() {
-        System.out.println("Terminata fase di testing.");
+    @AfterEach
+    public void runOnceAfterEachTests() {
+        System.out.println("Terminato test.");
     }
 
     @Test
@@ -56,12 +57,49 @@ class KenKenTest {
     }
 
     @Test
-    void addValue() {
+    void addValue(){
+        kenKen.addValue(1,0,0);
+        assertSame(1,kenKen.getValue(0,0),"Il valore inserito è 1");
     }
 
     @Test
-    void removeValue() {
+    void addNegativeValue(){
+        kenKen.addValue(-2,0,0);
+        assertNotSame(-2,kenKen.getValue(0,0),"Non è inserito un numero negativo");
     }
+
+    @Test
+    void addTwoValuesNotInContrast() {
+        kenKen.addValue(1,0,0);
+        kenKen.addValue(2,4,0);
+        assertTrue(kenKen.getState(0,0),"lo stato della cella 0,0 è true");
+        assertTrue(kenKen.getState(4,0),"lo stato della cella 4,0 è true");
+    }
+
+    @Test
+    void addTwoValuesInContrastInSameRow() {
+        kenKen.addValue(1,0,0);
+        kenKen.addValue(1,4,0);
+        assertFalse(kenKen.getState(0,0),"lo stato della cella 0,0 è false");
+        assertFalse(kenKen.getState(4,0),"lo stato della cella 4,0 è false");
+    }
+
+    @Test
+    void addTwoValuesInContrastInSameColumn() {
+        kenKen.addValue(1,0,0);
+        kenKen.addValue(1,0,4);
+        assertFalse(kenKen.getState(0,0),"lo stato della cella 0,0 è false");
+        assertFalse(kenKen.getState(0,4),"lo stato della cella 0,4 è false");
+    }
+
+    @Test
+    void afterRemoveInContrast() {
+        kenKen.addValue(1,0,0);
+        kenKen.addValue(1,0,4);
+        kenKen.removeValue(0,4);
+        assertTrue(kenKen.getState(0,0),"lo stato della cella 0,0 è true");
+    }
+
 
     @Test
     void isCompleted() {

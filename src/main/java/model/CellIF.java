@@ -27,5 +27,4 @@ public interface CellIF {
     void addInContrast(CellIF c);
     List<CellIF> getInContrast();
 
-    //util
 }
