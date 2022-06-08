@@ -364,8 +364,18 @@ public final class KenKen implements GridGame, Serializable {
 
         @Override
         public String toString() {
-            return "[" + value + "]";
+            return x+","+y;
         }
+
+        /*
+        @Override
+        public boolean equals(Object o){
+            if(!(o instanceof Cell))
+                return false;
+            Cell c = (Cell) o;
+            return c.getX()==this.x && c.getY()==this.y;
+        }
+         */
 
     }
 }

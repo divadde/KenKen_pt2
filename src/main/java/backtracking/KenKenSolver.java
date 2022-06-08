@@ -35,7 +35,7 @@ public final class KenKenSolver extends Backtracking<CellIF,Integer,MementoTable
     }
 
     @Override
-    protected boolean foundSolution(CellIF cell) {
+    protected boolean foundSolution() {
         return gg.isCompleted();
     }
 
@@ -51,12 +51,12 @@ public final class KenKenSolver extends Backtracking<CellIF,Integer,MementoTable
     }
 
     @Override
-    protected void remove(CellIF cellIF, Integer integer) {
+    protected void remove(CellIF cellIF) {
         gg.removeValue(cellIF.getX(), cellIF.getY());
     }
 
     @Override
-    protected void submitSolution(CellIF cell) {
+    protected void submitSolution() {
         completeTables.add(gg.createMemento());
         sol++;
         System.out.println("Soluzione "+sol+" trovata!");
@@ -74,16 +74,16 @@ public final class KenKenSolver extends Backtracking<CellIF,Integer,MementoTable
     }
 
     @Override
-    protected Collection<Integer> admissibleChoices(CellIF cell) {
+    protected List<Integer> admissibleChoices(CellIF cell) {
         LinkedList<Integer> ret = new LinkedList<>();
         for(int i=0; i<gg.getDimension(); i++){
-            System.out.println("Cella incriminata: "+cell.getX()+","+cell.getY());
+            //System.out.println("Cella incriminata: "+cell.getX()+","+cell.getY());
             if(admissible(cell,i+1)) {
                 ret.addLast(i + 1);
             }
         }
-        System.out.println("Scelte ammissibili per"+cell.getX()+","+cell.getY()+" :");
-        System.out.println(ret);
+        //System.out.println("Scelte ammissibili per"+cell.getX()+","+cell.getY()+" :");
+        //System.out.println(ret);
         return ret;
     }
 
@@ -121,7 +121,7 @@ public final class KenKenSolver extends Backtracking<CellIF,Integer,MementoTable
     }
 
     @Override
-    protected boolean stop(CellIF c){
+    protected boolean stop(){
         return !(numSol()<maxSol);
     }
 
